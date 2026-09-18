@@ -1,5 +1,6 @@
 # VIRUS LQP-79
-![Image](https://raw.githubusercontent.com/Team-ARG-Museum/ID-40-VIRUS-LQP-79/master/art/banner-ID-40.png)
+![Image](https://raw.githubusercontent.com/T-arg/ID-40-VIRUS-LQP-79/blob/master/art/banner-ID-40.png)
+
 
 VIRUS LQP-79 :  
 **Download latest Arduboy version and source :** https://github.com/Team-ARG-Museum/ID-40-VIRUS-LQP-79/releases/latest  

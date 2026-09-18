@@ -1,5 +1,5 @@
 # VIRUS LQP-79
-![Image](https://raw.githubusercontent.com/T-arg/ID-40-VIRUS-LQP-79/blob/master/art/banner-ID-40.png)
+![Image](https://github.com/T-arg/ID-40-VIRUS-LQP-79/blob/master/art/banner-ID-40.png)
 
 
 VIRUS LQP-79 :  

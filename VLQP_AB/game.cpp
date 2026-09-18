@@ -167,7 +167,7 @@ void nextLevelEnd()
     if (gameType != STATE_GAME_MAYHEM)
     {
       EEPROM.write(OFFSET_VLQP_START, gameID);
-      EEPROM.put(OFFSET_LEVEL, level - 1);
+      EEPROM.put(OFFSET_LEVEL, displayLevel);
       EEPROM.put(OFFSET_SCORE, scorePlayer);
       EEPROM.put(OFFSET_HEALTH, coolGirl.health);
       EEPROM.write(OFFSET_VLQP_END, gameID);
@@ -290,8 +290,8 @@ void stateGameContinue()
   if ((EEPROM.read(OFFSET_VLQP_START) == gameID) && (EEPROM.read(OFFSET_VLQP_END) == gameID))
   {
     initializePlayer(coolGirl);
-    EEPROM.get(OFFSET_LEVEL, level);
-    displayLevel = level;
+    EEPROM.get(OFFSET_LEVEL, displayLevel);
+    level = displayLevel % NUM_MAPS;
     EEPROM.get(OFFSET_SCORE, scorePlayer);
     EEPROM.get(OFFSET_HEALTH, coolGirl.health);
 

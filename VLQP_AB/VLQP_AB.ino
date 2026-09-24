@@ -1,7 +1,7 @@
 /*
   VIRUS LQP-79: http://www.team-arg.org/zmbt-manual.html
 
-  Arduboy version 1.7.0:  http://www.team-arg.org/zmbt-downloads.html
+  Arduboy version 1.7.1:  http://www.team-arg.org/zmbt-downloads.html
 
   MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
 
@@ -51,7 +51,6 @@ void setup()
   arduboy.bootLogoSpritesSelfMasked();
   arduboy.setFrameRate(60);
   gameID = GAME_ID;
-  //Serial.begin(9600);
 }
 
 void loop() {
@@ -60,6 +59,5 @@ void loop() {
   arduboy.clear();
   ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
   arduboy.display();
-  //Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
 }
 

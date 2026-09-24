@@ -45,7 +45,7 @@ void makeItSlide()
 void stateMenuIntro()
 {
   globalCounter++;
-  sprites.drawSelfMasked(34, 4, T_arg, 0);
+  sprites.drawSelfMasked(49, 20, T_arg, 0);
   if (globalCounter > 120)
   {
     globalCounter = 0;

@@ -1,9 +1,9 @@
 # VIRUS LQP-79
 ![Image](https://github.com/T-arg/ID-40-VIRUS-LQP-79/blob/master/art/banner-ID-40.png)
 
-VIRUS LQP-79 :
+VIRUS LQP-79 : https://t-arg.github.io/ID-40-VIRUS-LQP-79/
 
-**Download latest Arduboy version and source :** 
+**Download latest Arduboy version and source :** https://github.com/T-arg/ID-40-VIRUS-LQP-79/releases/latest
 
 MADE by TEAM a.r.g. : https://T-arg.github.io/
 

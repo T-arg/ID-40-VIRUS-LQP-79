@@ -291,7 +291,8 @@ void stateGameContinue()
   {
     initializePlayer(coolGirl);
     EEPROM.get(OFFSET_LEVEL, displayLevel);
-    level = displayLevel % NUM_MAPS;
+    displayLevel--;
+    level = (displayLevel % NUM_MAPS);
     EEPROM.get(OFFSET_SCORE, scorePlayer);
     EEPROM.get(OFFSET_HEALTH, coolGirl.health);
 

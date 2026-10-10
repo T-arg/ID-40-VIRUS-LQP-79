@@ -1,39 +1,78 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include "enemies.h"
-#include "level.h"
+// the velocity of a bullet in each of the 8 directions (also used for the camera)
+const char BulletXVelocities[8] = { 0, -2, -3, -2, 0, 2, 3, 2 };
 
-// constants /////////////////////////////////////////////////////////////////
+// addBullet
+// searches the bullet list for an empty slot, adds one if available
+void addBullet(int x, int y, byte direction)
+{
+  for (byte id = 0; id < BULLET_MAX; id++)
+  {
+    Bullet& bull = bullets[id];
+    if (!bull.active)
+    {
+      bull.x = x - BULLET_SIZE / 2;
+      bull.y = y - BULLET_SIZE / 2;
+      bull.vx = BulletXVelocities[direction];
+      bull.vy = BulletXVelocities[(direction + 6) % 8];
+      bull.active = true;
+      sfx(sfxShot);
+      break;
+    }
+  }
+}
 
-#define BULLET_MAX        6
-#define BULLET_WIDTH      2
-#define BULLET_HEIGHT     2
-#define BULLET_DIRECTIONS 8
+// updateBullets
+// updates the entire list of bullets
+void updateBullets()
+{
+  for (byte id = 0; id < BULLET_MAX; id++)
+  {
+    Bullet& obj = bullets[id];
+    if (!obj.active) continue;
 
-extern const char BulletXVelocities[8];
+    obj.x += obj.vx;
+    obj.y += obj.vy;
 
-// structures ////////////////////////////////////////////////////////////////
+    // collide with zombies
+    for (byte z = 0; z < ZOMBIE_MAX; z++)
+    {
+      if (zombieCollision(zombies[z], obj.x, obj.y, BULLET_SIZE, BULLET_SIZE))
+      {
+        obj.active = false;
+        zombieHurt(zombies[z]);
+        break;
+      }
+    }
 
-struct Bullet {
-  int x;
-  int y;
-  char vx;
-  char vy;
-  byte active;
-};
+    // collide with walls
+    if (getTileType(obj.x / TILE_WIDTH, obj.y / TILE_HEIGHT) > 10) obj.active = false;
 
-// globals ///////////////////////////////////////////////////////////////////
+    // delete if gone off screen
+    if ((obj.x < mapPositionX) || (obj.y < mapPositionY) || (obj.x > WIDTH + mapPositionX) || (obj.y > HEIGHT + mapPositionY))
+    {
+      obj.active = false;
+    }
+  }
+}
 
-extern Bullet bullets[BULLET_MAX];
-
-// method prototypes /////////////////////////////////////////////////////////
-
-bool setBullet(Bullet& obj, int x, int y, char vx, char vy);
-void addBullet(int x, int y, byte direction, char vx, char vy);
-void updateBullet(Bullet& obj);
-void updateBullets();
-void drawBullets();
-void clearBullets();
+// drawBullets
+// draws the entire list of bullets
+void drawBullets()
+{
+  for (byte id = 0; id < BULLET_MAX; id++)
+  {
+    Bullet& bull = bullets[id];
+    if (!bull.active) continue;
+    int x = bull.x - mapPositionX;
+    int y = bull.y - mapPositionY;
+    if ((x > 0) && (y > 0) && (x < WIDTH) && (y < HEIGHT))
+    {
+      sprites.drawSelfMasked(x, y, dotMask, 0);
+    }
+  }
+}
 
 #endif

@@ -15,16 +15,18 @@
 #define GAME_ID                  40
 
 #include "globals.h"
-#include "menu.h"
-#include "player.h"
-#include "enemies.h"
-#include "game.h"
-#include "elements.h"
+#include "music.h"
 #include "bitmaps.h"
 #include "level.h"
+#include "bullet.h"
+#include "enemies.h"
+#include "elements.h"
+#include "door.h"
+#include "pickup.h"
+#include "player.h"
+#include "menu.h"
+#include "game.h"
 
-
-typedef void (*FunctionPointer) ();
 const FunctionPointer PROGMEM mainGameLoop[] =
 {
   stateMenuIntro,
@@ -57,7 +59,7 @@ void loop() {
   if (!(arduboy.nextFrame())) return;
   arduboy.pollButtons();
   arduboy.clear();
+  musicUpdate();
   ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
   arduboy.display();
 }
-

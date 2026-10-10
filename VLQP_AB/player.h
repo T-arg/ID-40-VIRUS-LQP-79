@@ -149,7 +149,10 @@ void drawPlayer(Player& obj)
 {
   if ((obj.flashTime % 8) < 4)
   {
-    drawMasked(obj.x - mapPositionX, obj.y - mapPositionY, playerAmyMask, obj.direction, playerAmy, obj.frame + 4 * obj.direction);
+    int x = obj.x - mapPositionX;
+    int y = obj.y - mapPositionY;
+    if (obj.direction <= 4) drawMasked(x, y, playerAmyMask, obj.direction, playerAmy, obj.frame + 4 * obj.direction);
+    else drawFlipped(x, y, playerAmy + 2 + (obj.frame + 4 * (8 - obj.direction)) * 32, playerAmyMask + 2 + (8 - obj.direction) * 32, 15);
   }
 }
 

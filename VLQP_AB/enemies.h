@@ -112,7 +112,12 @@ void drawZombies()
       {
         int drawX = obj.x - mapPositionX;
         int drawY = obj.y - mapPositionY;
-        if (obj.type) drawMasked(drawX, drawY, enemyZombieMask, obj.direction, enemyZombie, obj.frame + 8 * obj.direction);
+        if (obj.type)
+        {
+          // only the zombie facing one way is stored, the other way is its mirror image
+          if (obj.direction) drawFlipped(drawX, drawY, enemyZombie + 2 + obj.frame * 32, enemyZombieMask + 2, 14);
+          else drawMasked(drawX, drawY, enemyZombieMask, 0, enemyZombie, obj.frame);
+        }
         else drawMasked(drawX, drawY, zombieTwoMask, obj.direction, zombieTwo, (obj.frame % 2) + 2 * obj.direction);
       }
     }

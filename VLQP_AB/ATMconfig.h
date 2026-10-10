@@ -3,8 +3,6 @@
 
 // only what the title tune and the sound effects use, everything else is left out
 #define ATM_FX_NOISE      0
-#define ATM_FX_TREMOLO    0
-#define ATM_FX_VIBRATO    0
 #define ATM_FX_NOTE_CUT   0
 #define ATM_FX_CUE        0
 #define ATM_FX_GOTO_ADV   0

@@ -258,6 +258,34 @@ void drawMasked(int x, int y, const unsigned char *mask, byte maskFrame, const u
   sprites.drawSelfMasked(x, y, image, frame);
 }
 
+// drawFlipped
+// draws a 16x16 image and its mask mirrored left to right (column c comes from column k - c). Sprites can't
+// mirror, so this erases with the mirrored mask and ORs the mirrored image straight into the screen buffer.
+// img and mask point at the first byte of the frame, k is the last used column (15, or 14 for the zombies)
+void drawFlipped(int x, int y, const unsigned char *img, const unsigned char *mask, byte k)
+{
+  byte *buf = arduboy.getBuffer();
+  byte shift = y & 7;
+  for (byte c = 0; c <= k; c++)
+  {
+    int sx = x + c;
+    if (sx < 0 || sx > 127) continue;
+    for (byte p = 0; p < 2; p++)
+    {
+      byte i = (p << 4) + k - c;
+      unsigned int im = (unsigned int)pgm_read_byte(img + i) << shift;
+      unsigned int mk = (unsigned int)pgm_read_byte(mask + i) << shift;
+      for (byte h = 0; h < 2; h++)
+      {
+        int page = (y >> 3) + p + h;
+        if (page < 0 || page > 7) continue;
+        byte *s = buf + page * 128 + sx;
+        *s = (*s & ~(byte)(mk >> (h << 3))) | (byte)(im >> (h << 3));
+      }
+    }
+  }
+}
+
 // burp
 // moves start toward goal; step is given in 4.4 fixed point
 short burp(short start, short goal, unsigned char step)

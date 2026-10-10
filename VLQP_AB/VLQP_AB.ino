@@ -1,11 +1,15 @@
 /*
-  VIRUS LQP-79: http://www.team-arg.org/zmbt-manual.html
+  VIRUS LQP-79: https://t-arg.github.io/ID-40-VIRUS-LQP-79/
 
-  Arduboy version 1.7.2:  http://www.team-arg.org/zmbt-downloads.html
+  Arduboy version 2.0.0:  https://github.com/T-arg/ID-40-VIRUS-LQP-79/releases/latest
 
-  MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
+  MADE by TEAM a.r.g. : https://t-arg.github.io
 
   2016 - FUOPY - JO3RI - STG - CASTPIXEL - JUSTIN CYR
+
+  UPDATED
+
+  2026 - JO3RI
 
   Game License: MIT : https://opensource.org/licenses/MIT
 

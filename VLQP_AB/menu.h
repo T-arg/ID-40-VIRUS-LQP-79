@@ -85,31 +85,26 @@ void stateMenuIntro()
 void stateMenuMain()
 {
   drawMenuPanel();
-  drawMenuItems(4, 0);
-  menuMoveSelection(5);
+  drawMenuItems(3, 0);
+  menuMoveSelection(4);
   if (arduboy.justPressed(A_BUTTON | B_BUTTON))
   {
     setSlidersToZero();
     gameState = menuSelection;
-    menuSelection = STATE_GAME_NEW - 10;
+    menuSelection = STATE_GAME_NEW - 9;
   }
   makeItSlide();
-}
-
-void stateMenuHelp()
-{
-  if (arduboy.justPressed(A_BUTTON | B_BUTTON)) gameState = STATE_MENU_MAIN;
 }
 
 void stateMenuPlay()
 {
   drawMenuPanel();
-  drawMenuItems(3, 7);
+  drawMenuItems(3, 6);
   menuMoveSelection(4);
   if (arduboy.justPressed(B_BUTTON))
   {
     setSlidersToZero();
-    gameState = menuSelection + 10;
+    gameState = menuSelection + 9;
     gameType = gameState;
   }
   else if (arduboy.justPressed(A_BUTTON))
@@ -150,11 +145,11 @@ void stateMenuSoundfx()
     gameState = STATE_MENU_MAIN;
   }
 
-  // text 4 is the title, 5 is "on" and 6 is "off", the selected one slides out
-  sprites.drawSelfMasked(128 - slideCounter, 25, menuText, 4);
+  // text 3 is the title, 4 is "off" and 5 is "on", the selected one slides out
+  sprites.drawSelfMasked(128 - slideCounter, 25, menuText, 3);
   byte on = arduboy.audio.enabled();
-  sprites.drawSelfMasked(128 - slideCounter - (on ? 0 : globalCounter), 34, menuText, 5);
-  sprites.drawSelfMasked(128 - slideCounter - (on ? globalCounter : 0), 43, menuText, 6);
+  sprites.drawSelfMasked(128 - slideCounter - (on ? 0 : globalCounter), 34, menuText, 4);
+  sprites.drawSelfMasked(128 - slideCounter - (on ? globalCounter : 0), 43, menuText, 5);
   makeItSlide();
 }
 

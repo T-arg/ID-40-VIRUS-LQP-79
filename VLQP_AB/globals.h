@@ -12,21 +12,20 @@
 //define menu states (on main menu)
 #define STATE_MENU_INTRO         0
 #define STATE_MENU_MAIN          1
-#define STATE_MENU_HELP          2
-#define STATE_MENU_PLAY          3
-#define STATE_MENU_INFO          4
-#define STATE_MENU_SOUNDFX       5
+#define STATE_MENU_PLAY          2
+#define STATE_MENU_INFO          3
+#define STATE_MENU_SOUNDFX       4
 
 //define game states
-#define STATE_GAME_PREPARE_LEVEL 6
-#define STATE_GAME_NEXT_LEVEL    7
-#define STATE_GAME_PLAYING       8
-#define STATE_GAME_OVER          9
-#define STATE_GAME_PAUSE         10
-#define STATE_GAME_END           11
-#define STATE_GAME_NEW           12
-#define STATE_GAME_CONTINUE      13
-#define STATE_GAME_MAYHEM        14
+#define STATE_GAME_PREPARE_LEVEL 5
+#define STATE_GAME_NEXT_LEVEL    6
+#define STATE_GAME_PLAYING       7
+#define STATE_GAME_OVER          8
+#define STATE_GAME_PAUSE         9
+#define STATE_GAME_END           10
+#define STATE_GAME_NEW           11
+#define STATE_GAME_CONTINUE      12
+#define STATE_GAME_MAYHEM        13
 
 #define LEVEL_WIDTH              512
 #define LEVEL_HEIGHT             256
@@ -227,7 +226,6 @@ void drawCoolDown();
 // menu.h
 void stateMenuIntro();
 void stateMenuMain();
-void stateMenuHelp();
 void stateMenuPlay();
 void stateMenuInfo();
 void stateMenuSoundfx();

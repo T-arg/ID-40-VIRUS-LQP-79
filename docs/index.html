@@ -137,6 +137,16 @@
         0 10px 16px rgba(93, 76, 75, 0.2);
     }
 
+
+    .play-wrap { position: relative; }
+    .play-overlay {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      background: #5d4c4b; color: #fefefd; border: 0; cursor: pointer;
+      font-family: inherit; font-size: 28px; letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .play-overlay:hover, .play-overlay:focus-visible { background: #7a6563; }
+
     .pabe {
       display: block;
       width: 512px;
@@ -366,7 +376,7 @@
 
       <div class="game-banner">
         <img
-          src="https://github.com/T-arg/ID-40-VIRUS-LQP-79/blob/master/art/banner-ID-40.png?raw=true"
+          src="images/banner-ID-40.png"
           alt="Virus LQP-79 banner">
       </div>
 
@@ -375,11 +385,16 @@
           <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="TEAMarg" data-color="#5d4c4b" data-emoji="☕" data-font="Cookie" data-text="Cool game? Buy us a coffee" data-outline-color="#fefefd" data-font-color="#fefefd" data-coffee-color="#FFDD00"></script>
         </div>
         <div class="pabeholder">
-          <iframe
-            class="pabe"
-            title="Virus LQP-79 — Arduboy Simulator"
-            src="https://tiberiusbrown.github.io/Ardens/player.html?blah=https://raw.githubusercontent.com/T-arg/ID-40-VIRUS-LQP-79/refs/heads/master/VLQP_AB/build/arduino.avr.leonardo/VLQP_AB.ino.hex&amp;g=none&amp;z=1&amp;palette=highcontrast"
-            allow="fullscreen; autoplay"></iframe>
+          <div class="pabe play-wrap" id="play-wrap">
+            <button type="button" class="play-overlay" id="play-btn" aria-label="Click to play">Click to play</button>
+          </div>
+          <template id="player-tpl">
+            <iframe
+              class="pabe"
+              title="Virus LQP-79 — Arduboy Simulator"
+              src="https://tiberiusbrown.github.io/Ardens/player.html?blah=https://raw.githubusercontent.com/T-arg/ID-40-VIRUS-LQP-79/refs/heads/master/VLQP_AB/build/arduino.avr.leonardo/VLQP_AB.ino.hex&amp;g=none&amp;z=1&amp;palette=highcontrast"
+              allow="fullscreen; autoplay"></iframe>
+          </template>
           <div class="hexlinkholder">
             <a
               class="hexlink"
@@ -560,6 +575,14 @@
           });
       });
     })();
+  </script>
+  <script>
+    document.getElementById('play-btn').addEventListener('click', function () {
+      var wrap = document.getElementById('play-wrap');
+      var frame = document.getElementById('player-tpl').content.firstElementChild.cloneNode(true);
+      wrap.replaceWith(frame);
+      frame.focus();
+    });
   </script>
 </body>
 </html>

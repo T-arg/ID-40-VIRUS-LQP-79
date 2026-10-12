@@ -47,6 +47,7 @@ const FunctionPointer PROGMEM mainGameLoop[] =
   stateGameNew,
   stateGameContinue,
   stateGameMayhem,
+  stateMenuJbox,
 };
 
 void setup()

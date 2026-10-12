@@ -26,6 +26,7 @@
 #define STATE_GAME_NEW           11
 #define STATE_GAME_CONTINUE      12
 #define STATE_GAME_MAYHEM        13
+#define STATE_MENU_JBOX          14       // jukebox (opened from the main menu)
 
 #define LEVEL_WIDTH              512
 #define LEVEL_HEIGHT             256

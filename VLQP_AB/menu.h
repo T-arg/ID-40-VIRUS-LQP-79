@@ -85,12 +85,12 @@ void stateMenuIntro()
 void stateMenuMain()
 {
   drawMenuPanel();
-  drawMenuItems(3, 0);
-  menuMoveSelection(4);
+  drawMenuItems(4, 0);
+  menuMoveSelection(5);
   if (arduboy.justPressed(A_BUTTON | B_BUTTON))
   {
     setSlidersToZero();
-    gameState = menuSelection;
+    gameState = menuSelection < 5 ? menuSelection : STATE_MENU_JBOX;
     menuSelection = STATE_GAME_NEW - 9;
   }
   makeItSlide();
@@ -99,7 +99,7 @@ void stateMenuMain()
 void stateMenuPlay()
 {
   drawMenuPanel();
-  drawMenuItems(3, 6);
+  drawMenuItems(3, 7);
   menuMoveSelection(4);
   if (arduboy.justPressed(B_BUTTON))
   {
@@ -145,12 +145,45 @@ void stateMenuSoundfx()
     gameState = STATE_MENU_MAIN;
   }
 
-  // text 3 is the title, 4 is "off" and 5 is "on", the selected one slides out
-  sprites.drawSelfMasked(128 - slideCounter, 25, menuText, 3);
+  // text 4 is the title, 5 is "off" and 6 is "on", the selected one slides out
+  sprites.drawSelfMasked(128 - slideCounter, 25, menuText, 4);
   byte on = arduboy.audio.enabled();
-  sprites.drawSelfMasked(128 - slideCounter - (on ? 0 : globalCounter), 34, menuText, 4);
-  sprites.drawSelfMasked(128 - slideCounter - (on ? globalCounter : 0), 43, menuText, 5);
+  sprites.drawSelfMasked(128 - slideCounter - (on ? 0 : globalCounter), 34, menuText, 5);
+  sprites.drawSelfMasked(128 - slideCounter - (on ? globalCounter : 0), 43, menuText, 6);
   makeItSlide();
+}
+
+// JUKEBOX: UP/DOWN = MUSIC/SNDFX, LEFT = next number, RIGHT = previous number, B = play, A = stop (A again = back to the menu)
+byte jbRow = 0;
+byte jbNr[2];                                  // MUSIC 0..NUM_TUNES, SNDFX 0..6
+
+void stateMenuJbox()
+{
+  drawBadge();
+  for (byte i = 0; i < 2; i++)
+  {
+    sprites.drawSelfMasked(40, 38 + 12*i, jboxText, i);
+    if (jbRow != i || (arduboy.frameCount & 16))              // the selected number blinks
+    {
+      sprites.drawPlusMask(74, 38 + 12*i, numbersSmall_plus_mask, (jbNr[i] + 1) / 10);
+      sprites.drawPlusMask(81, 38 + 12*i, numbersSmall_plus_mask, (jbNr[i] + 1) % 10);
+    }
+  }
+  byte n = jbRow ? JBOX_SFX : JBOX_MUSIC;
+  if (arduboy.justPressed(UP_BUTTON)) jbRow = 0;
+  if (arduboy.justPressed(DOWN_BUTTON)) jbRow = 1;
+  if (arduboy.justPressed(LEFT_BUTTON)) jbNr[jbRow] = (jbNr[jbRow] + 1) % n;
+  if (arduboy.justPressed(RIGHT_BUTTON)) jbNr[jbRow] = (jbNr[jbRow] + n - 1) % n;
+  if (arduboy.justPressed(B_BUTTON))
+  {
+    if (jbRow) sfx((const uint8_t *)pgm_read_word(&sfxList[jbNr[1]]));
+    else if (arduboy.audio.enabled()) musicPlay(jbNr[0]);
+  }
+  if (arduboy.justPressed(A_BUTTON))
+  {
+    if (musicId == MUSIC_OFF) gameState = STATE_MENU_MAIN;    // nothing playing: leave, the title tune restarts
+    else musicPlay(MUSIC_OFF);
+  }
 }
 
 #endif

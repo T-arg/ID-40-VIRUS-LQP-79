@@ -1504,21 +1504,30 @@ void sfx(const uint8_t *track)
   sfxTimer = 45;                                            // frames until the player is switched off again
 }
 
+// play a tune (MUSIC_OFF = stop)
+void musicPlay(byte id)
+{
+  musicId = id;
+  if (id == MUSIC_OFF) ATM.stop();
+  else ATM.play(id == MUSIC_TITLE ? graveyardShift : (const uint8_t *)pgm_read_word(&tunes[id - 1]));
+}
+
+// the jukebox (menu.h): tunes 0 = title, 1..NUM_TUNES = the level tunes, and the 7 sound effects
+#define JBOX_MUSIC (NUM_TUNES + 1)
+#define JBOX_SFX 7
+const uint8_t *const sfxList[] PROGMEM = { sfxShot, sfxHit, sfxDie, sfxOuch, sfxCoin, sfxHeart, sfxRescue };
+
 // called once per frame: title music in the menus, a tune per level while playing, silence in between
 void musicUpdate()
 {
   byte want = MUSIC_OFF;
-  if (arduboy.audio.enabled())
+  if (gameState == STATE_MENU_JBOX) want = musicId;           // the jukebox decides what plays
+  else if (arduboy.audio.enabled())
   {
     if (gameState <= STATE_MENU_SOUNDFX) want = MUSIC_TITLE;
     else if (gameState == STATE_GAME_PLAYING || gameState == STATE_GAME_PAUSE) want = 1 + (displayLevel - 1) % NUM_TUNES;
   }
-  if (want != musicId)
-  {
-    musicId = want;
-    if (want == MUSIC_OFF) ATM.stop();
-    else ATM.play(want == MUSIC_TITLE ? graveyardShift : (const uint8_t *)pgm_read_word(&tunes[want - 1]));
-  }
+  if (want != musicId) musicPlay(want);
   if (sfxTimer && !--sfxTimer && musicId == MUSIC_OFF) ATM.stop();   // sfx finished, free the CPU
 }
 

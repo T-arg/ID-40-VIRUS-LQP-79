@@ -7,9 +7,7 @@
 
   2016 - FUOPY - JO3RI - STG - CASTPIXEL - JUSTIN CYR
 
-  UPDATED
-
-  2026 - JO3RI
+  2026 - MUSIC and SOUND EFFECTS - JO3RI
 
   Game License: MIT : https://opensource.org/licenses/MIT
 
@@ -54,7 +52,6 @@ void setup()
 {
   arduboy.boot();                                           // begin with the boot logo en setting up the device to work
   arduboy.audio.begin();
-  arduboy.bootLogoSpritesSelfMasked();
   arduboy.setFrameRate(60);
   gameID = GAME_ID;
 }

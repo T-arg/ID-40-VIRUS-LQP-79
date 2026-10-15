@@ -61,22 +61,8 @@ void drawDoor()
   else drawMasked(x, y, exitClosedMask, 0, exitClosed, exitDoor.orientation);
 }
 
-// the compass arrows, 5x5 pixels, one per direction: frame = (up/down + 1) * 3 + (left/right + 1)
-const unsigned char PROGMEM compassArrow[] = {
-  5, 5,
-  0x07, 0x03, 0x05, 0x08, 0x10,   // NW
-  0x04, 0x02, 0x1F, 0x02, 0x04,   // N
-  0x10, 0x08, 0x05, 0x03, 0x07,   // NE
-  0x04, 0x0E, 0x1F, 0x04, 0x04,   // W
-  0x00, 0x00, 0x00, 0x00, 0x00,   // (the middle, never drawn)
-  0x04, 0x04, 0x1F, 0x0E, 0x04,   // E
-  0x1C, 0x18, 0x14, 0x02, 0x01,   // SW
-  0x04, 0x08, 0x1F, 0x08, 0x04,   // S
-  0x01, 0x02, 0x14, 0x18, 0x1C,   // SE
-};
-
 // drawCompass
-// while the exit is open, a small arrow circles the player and points at the door (8 directions)
+// while the exit is open, a small 2x2 dot circles the player and points at the door (8 directions)
 void drawCompass()
 {
   if (!exitDoor.active) return;
@@ -84,17 +70,10 @@ void drawCompass()
   int dy = exitDoor.y - coolGirl.y;
   int ax = abs(dx);
   int ay = abs(dy);
-  char hx = 0;                                              // -1, 0 or 1: the direction, left/right
-  char hy = 0;                                              // and up/down
-  if (ay * 2 < ax) hx = (dx < 0) ? -1 : 1;                  // mostly sideways
-  else if (ax * 2 < ay) hy = (dy < 0) ? -1 : 1;             // mostly up or down
-  else
-  {
-    hx = (dx < 0) ? -1 : 1;
-    hy = (dy < 0) ? -1 : 1;
-  }
+  char hx = (ax * 2 < ay) ? 0 : ((dx < 0) ? -1 : 1);        // -1, 0 or 1: the direction, left/right (0 when mostly up or down)
+  char hy = (ay * 2 < ax) ? 0 : ((dy < 0) ? -1 : 1);        // and up/down (0 when mostly sideways)
   byte r = (hx && hy) ? COMPASS_DIAGONAL : COMPASS_RADIUS;
-  sprites.drawSelfMasked(coolGirl.x - mapPositionX + 6 + hx * r, coolGirl.y - mapPositionY + 6 + hy * r, compassArrow, (hy + 1) * 3 + hx + 1);
+  arduboy.fillRect(coolGirl.x - mapPositionX + 7 + hx * r, coolGirl.y - mapPositionY + 7 + hy * r, 2, 2, WHITE);
 }
 
 #endif
